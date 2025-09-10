@@ -5,7 +5,9 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    if (numbers.length === 0) return [];
+    if (numbers.length === 1) return [numbers[0], numbers[0]];
+    return [numbers[0], numbers[numbers.length - 1]];
 }
 
 /**
@@ -13,7 +15,11 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    let result: number[] = [];
+    for (let i = 0; i < numbers.length; i++) {
+        result[i] = numbers[i] * 3;
+    }
+    return result;
 }
 
 /**
@@ -21,7 +27,16 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    let result: number[] = [];
+    for (let i = 0; i < numbers.length; i++) {
+        let parsed = parseInt(numbers[i]);
+        if (isNaN(parsed)) {
+            result[i] = 0;
+        } else {
+            result[i] = parsed;
+        }
+    }
+    return result;
 }
 
 /**
@@ -32,7 +47,20 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    let result: number[] = [];
+    for (let i = 0; i < amounts.length; i++) {
+        let str = amounts[i];
+        if (str[0] === "$") {
+            str = str.slice(1);
+        }
+        let parsed = parseInt(str);
+        if (isNaN(parsed)) {
+            result[i] = 0;
+        } else {
+            result[i] = parsed;
+        }
+    }
+    return result;
 };
 
 /**
@@ -41,7 +69,18 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    let result: string[] = [];
+    for (let i = 0; i < messages.length; i++) {
+        let msg = messages[i];
+        if (msg.endsWith("?")) {
+            continue;
+        } else if (msg.endsWith("!")) {
+            result.push(msg.toUpperCase());
+        } else {
+            result.push(msg);
+        }
+    }
+    return result;
 };
 
 /**
@@ -49,7 +88,13 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    let count = 0;
+    for (let i = 0; i < words.length; i++) {
+        if (words[i].length < 4) {
+            count++;
+        }
+    }
+    return count;
 }
 
 /**
@@ -58,7 +103,13 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    for (let i = 0; i < colors.length; i++) {
+        let color = colors[i].toLowerCase();
+        if (color !== "red" && color !== "blue" && color !== "green") {
+            return false;
+        }
+    }
+    return true;
 }
 
 /**
@@ -69,7 +120,15 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length === 0) return "0=0";
+    let sum = 0;
+    let expression = "";
+    for (let i = 0; i < addends.length; i++) {
+        sum += addends[i];
+        expression += addends[i].toString();
+        expression += i === addends.length - 1 ? "" : "+";
+    }
+    return `${sum}=${expression}`;
 }
 
 /**
@@ -82,5 +141,20 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    let result: number[] = [];
+    let sum = 0;
+
+    for (let i = 0; i < values.length; i++) {
+        if (values[i] < 0) {
+            result.push(values[i]);
+            result.push(sum);
+            return result.concat(values.slice(i + 1));
+        } else {
+            result.push(values[i]);
+            sum += values[i];
+        }
+    }
+
+    result.push(sum);
+    return result;
 }
