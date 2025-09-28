@@ -11,7 +11,7 @@ export function Counter(): React.JSX.Element {
                 }}
             >
                 Add One
-            </Button>
+            </Button>{" "}
             to {value}.
         </span>
     );
